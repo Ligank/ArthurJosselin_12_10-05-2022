@@ -1,0 +1,25 @@
+.App {
+    height: 100vh;
+}
+
+.nav_vertical_center {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashBoard {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 0;
+}
+
+.dashboard_down {
+    display: flex;
+}
+
+.dashboard_left_down {
+    width: 58vw;
+    display: flex;
+    justify-content: space-between;
+}
