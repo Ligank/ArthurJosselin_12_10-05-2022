@@ -7,15 +7,21 @@ import Time from "../components/Time"
 import Recap from "../components/Recap"
 import Score from "../components/Score"
 import Food from "../components/Food"
+import { USER_ACTIVITY, USER_AVERAGE_SESSIONS, USER_MAIN_DATA, USER_PERFORMANCE } from "../data/DataMocked";
 
 function App() {
+    let id = parseInt(window.location.pathname.replace('/Home/', ''));
+    const profil = !id ? USER_MAIN_DATA : USER_MAIN_DATA.filter(profil => profil.id === id);
   return (
     <div className="App">
       <Header />
       <div className='nav_vertical_center'>
         <NavigationLeft />
         <div className='dashBoard'>
-          <TitleDashboard />
+          <TitleDashboard 
+              key={`${id}`}
+              name={profil[0].userInfos.firstName}>
+          </TitleDashboard>
           <div className='dashboard_down'>
             <div className='dashboard_left'>
               <Activity />

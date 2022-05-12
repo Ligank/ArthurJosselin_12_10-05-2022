@@ -1,0 +1,47 @@
+.profil_box {
+    background-color: black;
+    font-size: 40px;
+    height: 50px;
+    text-decoration: none;
+    color: white;
+    border-radius: 10px;
+    padding: 15px;
+    animation-name: reverse_card;
+    animation-duration: 0.3s;
+}
+
+.profil_box:hover {
+    animation: hover_card 2s linear;
+    animation-fill-mode: both;
+    animation-direction: alternate;
+    animation-duration: 0.3s;
+}
+
+@keyframes hover_card {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.01);
+    }
+    75% {
+        transform: scale(1.02);
+    }
+    100% {
+        transform: scale(1.03);
+    }
+}
+@keyframes reverse_card {
+    0% {
+        transform: scale(1.03);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+    75% {
+        transform: scale(1.01);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

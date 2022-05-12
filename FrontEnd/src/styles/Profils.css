@@ -1,0 +1,6 @@
+.profil_selection {
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+}
