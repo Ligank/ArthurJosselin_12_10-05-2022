@@ -7,7 +7,7 @@ import Time from "../components/Time"
 import Recap from "../components/Recap"
 import Score from "../components/Score"
 import Food from "../components/Food"
-import { USER_ACTIVITY, USER_AVERAGE_SESSIONS, USER_MAIN_DATA, USER_PERFORMANCE } from "../data/DataMocked";
+import { USER_MAIN_DATA } from "../data/DataMocked";
 
 function App() {
     let id = parseInt(window.location.pathname.replace('/Home/', ''));
@@ -37,6 +37,7 @@ function App() {
       </div>
     </div>
   );
+  
 }
 
 export default App;
