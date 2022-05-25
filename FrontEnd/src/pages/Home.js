@@ -1,4 +1,4 @@
-import '../styles/Home.css';
+
 import Header from "../components/Header"
 import NavigationLeft from "../components/NavigationLeft"
 import TitleDashboard from "../components/TitleDashboard"
@@ -8,6 +8,8 @@ import Recap from "../components/Recap"
 import Score from "../components/Score"
 import Food from "../components/Food"
 import { USER_MAIN_DATA } from "../data/DataMocked";
+import '../styles/Home.css';
+
 
 function App() {
     let id = parseInt(window.location.pathname.replace('/Home/', ''));

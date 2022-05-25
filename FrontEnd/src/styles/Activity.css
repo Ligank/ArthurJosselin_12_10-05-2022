@@ -45,14 +45,11 @@
 }
 
 .Activity_graphic {
-    height: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
+    width: 100%;
+    height: 100%;
 }
 
 .bar {
-    background-color: #E60000;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
