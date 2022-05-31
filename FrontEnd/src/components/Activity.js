@@ -52,13 +52,12 @@ export async function graphique() {
     }
     
     
-
-
     const xScale = d3.scaleBand().domain(data_activity.map((dataPoint) => dataPoint.day)).rangeRound([0, 853]).padding(0.9);
     const xScaleNumber = d3.scaleBand().domain(Array.from(Array(kiloArray.length)).map((e,i)=>i+1)).rangeRound([0, 853]).padding(0.9);
     const yScaleKilo = d3.scaleLinear().domain([kiloArrayMin, kiloArrayMax]).range([220, 0]);
     const yScaleCalorie = d3.scaleLinear().domain([caloriesArrayMin, caloriesArrayMax]).range([220, 0]);
-    const yScale = d3.scaleLinear().domain(Array.from(Array(kiloArrayMax - kiloArrayMin)).map((e,i)=>i+kiloArrayMin)).range([192, 0]);
+    const yScale = d3.scaleBand().domain(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin)).rangeRound([220, 0]);
+    console.log(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin))
 
     const container = d3.select('.Activity_graphic');
 
@@ -103,16 +102,13 @@ export async function graphique() {
                 
 
         container.append("g")
-                .call(d3.axisRight(yScale).tickSizeOuter(0).tickSizeInner(0))
+                .call(d3.axisRight(yScale).tickSizeOuter(10).tickSizeInner(10))
                 .attr('transform', `translate(800, 0)`)
+                .attr("class","yaxis")
                 .attr('color', '#9B9EAC')
                 .selectAll('text')
-                .attr('dy', '25px')
                 .style("font-size", "14px")
                 ;         
-                
-
-
 }
 
 
