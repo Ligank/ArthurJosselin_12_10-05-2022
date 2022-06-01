@@ -1,3 +1,5 @@
+
+
 .Activity {
     width: 58vw;
     height: 34vh;
@@ -45,16 +47,24 @@
 }
 
 .Activity_graphic {
-    width: 100%;
+    width: 94%;
     height: 100%;
+    align-self: center;
+    margin-left: 10px;
 }
 
-.bar {
-    padding-left: 50px;
-}
+
 
 .domain {
-    color: #FBFBFB;
-    stroke-width: 7px;
+    color: black;
+    stroke-width: 1px;
+    display: none;
 }
+
+line {
+    opacity: 0.3;
+}
+
+
+
 
