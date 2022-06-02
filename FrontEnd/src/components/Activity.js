@@ -36,7 +36,7 @@ export async function graphique() {
     let kiloArrayMin = Math.min.apply(Math, kiloArray);
     kiloArrayMin--;
     let kiloArrayMax = Math.max.apply(Math, kiloArray);
-    kiloArrayMax++;
+    //kiloArrayMax++;
    
     let caloriesArray = [];
     data_activity.forEach(calorie => {
@@ -61,79 +61,124 @@ export async function graphique() {
     const xScaleNumber = d3.scaleBand().domain(Array.from(Array(kiloArray.length)).map((e,i)=>i+1)).rangeRound([0, containerWidth]).padding(0.9);
     const yScaleKilo = d3.scaleLinear().domain([kiloArrayMin, kiloArrayMax]).range([containerHeight, 0]);
     const yScaleCalorie = d3.scaleLinear().domain([caloriesArrayMin, caloriesArrayMax]).range([containerHeight, 0]);
-    const yScale = d3.scalePoint().domain(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin)).rangeRound([containerHeight, 0]).padding(0);
+    const yScale = d3.scalePoint().domain(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin)).rangeRound([containerHeight, 0]);
 
-;
-    console.log(containerWidth)
+
+    //Axis and yaxis
+    container.append("g")
+             .call(d3.axisBottom(xScaleNumber).tickSizeOuter(0).tickSizeInner(0))
+             .attr('transform', `translate(0, ${containerHeight})`)
+             .attr('color', '#9B9EAC')
+             .selectAll('text')
+             .attr('dy', '25px')
+             .style("font-size", "14px");           
+
+    container.append("g")
+             .call(d3.axisRight(yScale).tickSizeOuter(0).tickSizeInner(containerWidth - 2*containerWidth))
+             .attr('transform', `translate(${containerWidth - 40}, 10)`)
+             .attr("class","yaxis")
+             .style("stroke-dasharray", ("2, 3"))
+             .attr('color', '#9B9EAC')
+             .selectAll('text')
+             .attr('dx', '15px')
+             .style("font-size", "14px");
 
 
     let multigraph = container.selectAll(".bar")
                     .data(data_activity)
                     .enter().append("g")
-                    .attr("class", "bar")
+                    .attr("class", "bar group")
+                    .on('mouseover', function(d, i) {
+                        d3.select(this).select('.back').transition()
+                        .duration('50')
+                        .attr('opacity', '0.5')
+                    })
+                    .on('mouseout', function(d, i) {
+                        d3.select(this).select('.back').transition()
+                        .duration('50')
+                        .attr('opacity', '0')
+                    })
+                    ;
+
+         multigraph.append("rect")
+                    .attr("class", "first")
+                    .attr("class","back")
+                    .attr('width', 52)
+                    .attr('height', (data) => containerHeight - yScaleKilo(data.kilogram) + 10)
+                    .attr('x', data => xScale(data.day))
+                    .attr('y', data => yScaleKilo(data.kilogram))
+                    .attr("fill", "#C4C4C4")
+                    .attr('opacity', '0')
+                    .attr('transform', `translate(-20, 0)`);
                     
 
         multigraph.append("rect")
-                .attr("class", "first")
-                .attr("class","bar kilogram")
-                .attr('width', 11)
-                .attr('height', (data) => containerHeight - yScaleKilo(data.kilogram))
-                .attr('x', data => xScale(data.day))
-                .attr('y', data => yScaleKilo(data.kilogram))
-                .attr("fill", "#282D30")
-                .attr('rx', 5, 0)
-                .attr('transform', `translate(-10, 10)`);
+                  .attr("class", "first")
+                  .attr("class","bar kilogram")
+                  .attr('width', 11)
+                  .attr('height', (data) => containerHeight - yScaleKilo(data.kilogram))
+                  .attr('x', data => xScale(data.day))
+                  .attr('y', data => yScaleKilo(data.kilogram))
+                  .attr("fill", "#282D30")
+                  .attr('rx', 5, 0)
+                  .attr('transform', `translate(-10, 10)`);
 
         multigraph.append("rect")//fausse ligne pour arrondi
-                .attr("class", "first")
-                .attr("class","bar ghost")
-                .attr('width', 11)
-                .attr('height', (data) => containerHeight - 10 - yScaleKilo(data.kilogram))
-                .attr('x', data => xScale(data.day))
-                .attr('y', data => yScaleKilo(data.kilogram))
-                .attr("fill", "#282D30")
-                .attr('transform', `translate(-10, 20)`);
+                  .attr("class", "first")
+                  .attr("class","bar ghost")
+                  .attr('width', 11)
+                  .attr('height', (data) => containerHeight - 10 - yScaleKilo(data.kilogram))
+                  .attr('x', data => xScale(data.day))
+                  .attr('y', data => yScaleKilo(data.kilogram))
+                  .attr("fill", "#282D30")
+                  .attr('transform', `translate(-10, 20)`);
 
         multigraph.append("rect")
-                .attr("class", "second")
-                .attr("class","bar calories")
-                .attr("width", 11)
-                .attr('height', (data) => containerHeight - yScaleCalorie(data.calories))
-                .attr('x', data => xScale(data.day))
-                .attr('y', data => yScaleCalorie(data.calories))
-                .attr("fill", "#E60000")
-                .attr('rx', 5)
-                .attr('transform', `translate(10, 10)`);
+                  .attr("class", "second")
+                  .attr("class","bar calories")
+                  .attr("width", 11)
+                  .attr('height', (data) => containerHeight - yScaleCalorie(data.calories))
+                  .attr('x', data => xScale(data.day))
+                  .attr('y', data => yScaleCalorie(data.calories))
+                  .attr("fill", "#E60000")
+                  .attr('rx', 5)
+                  .attr('transform', `translate(10, 10)`);
 
         multigraph.append("rect")//fausse ligne pour arrondi
-                .attr("class", "second")
-                .attr("class","bar calories")
-                .attr("width", 11)
-                .attr('height', (data) => containerHeight - 10 - yScaleCalorie(data.calories))
-                .attr('x', data => xScale(data.day))
-                .attr('y', data => yScaleCalorie(data.calories))
-                .attr("fill", "#E60000")
-                .attr('transform', `translate(10, 20)`);
+                  .attr("class", "second")
+                  .attr("class","bar ghost")
+                  .attr("width", 11)
+                  .attr('height', (data) => containerHeight - 10 - yScaleCalorie(data.calories))
+                  .attr('x', data => xScale(data.day))
+                  .attr('y', data => yScaleCalorie(data.calories))
+                  .attr("fill", "#E60000")
+                  .attr('transform', `translate(10, 20)`);
 
 
-        container.append("g")
-                .call(d3.axisBottom(xScaleNumber).tickSizeOuter(0).tickSizeInner(0))
-                .attr('transform', `translate(0, ${containerHeight})`)
-                .attr('color', '#9B9EAC')
-                .selectAll('text')
-                .attr('dy', '25px')
-                .style("font-size", "14px");
-                
 
-        container.append("g")
-                .call(d3.axisRight(yScale).tickSizeOuter(0).tickSizeInner(containerWidth - 2*containerWidth))
-                .attr('transform', `translate(${containerWidth - 40}, 10)`)
-                .attr("class","yaxis")
-                .style("stroke-dasharray", ("2, 3"))
-                .attr('color', '#9B9EAC')
-                .selectAll('text')
-                .attr('dx', '15px')
-                .style("font-size", "14px");         
+                let test = multigraph.selectAll('.back')
+                test.each(function(p,j) {
+                    let caloriesHeight = d3.select(this.nextElementSibling.nextElementSibling.nextElementSibling).node().getBoundingClientRect().height;
+                    let backHeight = d3.select(this).node().getBoundingClientRect().height;
+                    d3.select(this)
+                    .attr('height', function() {
+                       if(caloriesHeight > backHeight) {
+                           return caloriesHeight
+                       } else {
+                           return backHeight
+                       }
+                   })
+                   /*.attr('transform', function() {
+                       console.log(d3.select(this).node().getBoundingClientRect().height - backHeight - 2*d3.select(this).node().getBoundingClientRect().height - backHeight)
+                    if(caloriesHeight > backHeight) {
+                        return `translate(-20, -127)`;
+                    } else {
+                        return `translate(-20, 0)`;
+                    }
+                })*/
+                })
+                  
+                         
 }
 
 
