@@ -19,6 +19,7 @@ function Activity() {
     </div>
 }
 window.onload = graphique
+
 export default Activity
 
 //graphique
@@ -64,37 +65,34 @@ export async function graphique() {
     const yScale = d3.scalePoint().domain(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin)).rangeRound([containerHeight, 0]);
 
 
-    //Axis and yaxis
-    container.append("g")
-             .call(d3.axisBottom(xScaleNumber).tickSizeOuter(0).tickSizeInner(0))
-             .attr('transform', `translate(0, ${containerHeight})`)
-             .attr('color', '#9B9EAC')
-             .selectAll('text')
-             .attr('dy', '25px')
-             .style("font-size", "14px");           
+    
+             
 
-    container.append("g")
-             .call(d3.axisRight(yScale).tickSizeOuter(0).tickSizeInner(containerWidth - 2*containerWidth))
-             .attr('transform', `translate(${containerWidth - 40}, 10)`)
-             .attr("class","yaxis")
-             .style("stroke-dasharray", ("2, 3"))
-             .attr('color', '#9B9EAC')
-             .selectAll('text')
-             .attr('dx', '15px')
-             .style("font-size", "14px");
-
-
+    //Création de la div back et gestion du hover
     let multigraph = container.selectAll(".bar")
                     .data(data_activity)
                     .enter().append("g")
                     .attr("class", "bar group")
+                    .lower()
                     .on('mouseover', function(d, i) {
                         d3.select(this).select('.back').transition()
                         .duration('50')
                         .attr('opacity', '0.5')
+                        d3.select(this).select('.dataShow').transition()
+                        .duration('50')
+                        .attr('opacity', '1')
+                        d3.select(this).selectAll('.textHover').transition()
+                        .duration('50')
+                        .attr('opacity', '1')
                     })
                     .on('mouseout', function(d, i) {
                         d3.select(this).select('.back').transition()
+                        .duration('50')
+                        .attr('opacity', '0')
+                        d3.select(this).select('.dataShow').transition()
+                        .duration('50')
+                        .attr('opacity', '0')
+                        d3.select(this).selectAll('.textHover').transition()
                         .duration('50')
                         .attr('opacity', '0')
                     })
@@ -112,6 +110,7 @@ export async function graphique() {
                     .attr('transform', `translate(-20, 0)`);
                     
 
+        //creation des barres            
         multigraph.append("rect")
                   .attr("class", "first")
                   .attr("class","bar kilogram")
@@ -154,33 +153,99 @@ export async function graphique() {
                   .attr("fill", "#E60000")
                   .attr('transform', `translate(10, 20)`);
 
+        //Axis and yaxis
+        container.append("g")
+                 .call(d3.axisBottom(xScaleNumber).tickSizeOuter(0).tickSizeInner(0))
+                 .attr('transform', `translate(0, ${containerHeight})`)
+                 .attr('color', '#9B9EAC')
+                 .selectAll('text')
+                 .attr('dy', '25px')
+                 .style("font-size", "14px");           
+        container.append("g")
+                 .call(d3.axisRight(yScale).tickSizeOuter(0).tickSizeInner(containerWidth - 2*containerWidth))
+                 .attr('transform', `translate(${containerWidth - 40}, 10)`)
+                 .attr("class","yaxis")
+                 .style("stroke-dasharray", ("2, 3"))
+                 .attr('color', '#9B9EAC')
+                 .lower()
+                 .selectAll('text')
+                 .attr('dx', '15px')
+                 .style("font-size", "14px");
 
-
-                let test = multigraph.selectAll('.back')
-                test.each(function(p,j) {
-                    let caloriesHeight = d3.select(this.nextElementSibling.nextElementSibling.nextElementSibling).node().getBoundingClientRect().height;
-                    let backHeight = d3.select(this).node().getBoundingClientRect().height;
-                    d3.select(this)
-                    .attr('height', function() {
-                       if(caloriesHeight > backHeight) {
-                           return caloriesHeight
-                       } else {
-                           return backHeight
-                       }
-                   })
-                   /*.attr('transform', function() {
-                       console.log(d3.select(this).node().getBoundingClientRect().height - backHeight - 2*d3.select(this).node().getBoundingClientRect().height - backHeight)
+        //changements de la taille et de la position de la div back si la barre calorie est plus grande que la barre kilos        
+        let back = multigraph.selectAll('.back')
+        back.each(function(p,j) {
+            let caloriesHeight = d3.select(this.nextElementSibling.nextElementSibling.nextElementSibling).node().getBoundingClientRect().height;
+            let backHeight = d3.select(this).node().getBoundingClientRect().height;
+            d3.select(this)
+              .attr('height', function() {
                     if(caloriesHeight > backHeight) {
-                        return `translate(-20, -127)`;
+                        return (caloriesHeight + 10)
                     } else {
-                        return `translate(-20, 0)`;
+                        return backHeight
                     }
-                })*/
                 })
-                  
-                         
-}
+                .attr('y', function() {
+                    if(caloriesHeight > backHeight) {
+                        return this.nextElementSibling.nextElementSibling.nextElementSibling.getBBox().y;
+                    } else {
+                        return this.getBBox().y;
+                    }
+                })
+            })
+        //creation des div contenant les données de chaque barre    
+        multigraph.each(function(p,j) {
+            let caloriesHeight = d3.select(this).select('.calories').node().getBoundingClientRect().height;
+            let kiloHeight = d3.select(this).select('.kilogram').node().getBoundingClientRect().height;
+            let newY = this.firstChild.nextElementSibling.nextElementSibling.nextElementSibling.getBBox().y;
+            let actualY = this.firstChild.nextElementSibling.getBBox().y
+            d3.select(this).append('rect')
+                    .attr('class', 'dataShow')
+                    .attr('height', 63)
+                    .attr('width', 40)
+                    .attr("fill", "#E60000")
+                    .attr('y', function() {
+                        if(caloriesHeight > kiloHeight) {
+                            return newY
+                        } else {
+                            return actualY
+                        }
+                    })
+                    .attr('x', this.firstChild.nextElementSibling.getBBox().x + 35)
+                    .attr('opacity', '0')
 
+            d3.select(this).append('text')
+                    .text(data => data.kilogram + 'kg')
+                    .attr("fill", "#FFFFFF")
+                    .attr('class', 'textHover')
+                    .style("font-size", "9px")
+                    .attr('y', function() {
+                        if(caloriesHeight > kiloHeight) {
+                            return newY + 20
+                        } else {
+                            return actualY + 20
+                        }
+                    })
+                    .attr('x', this.firstChild.nextElementSibling.getBBox().x + 45)
+                    .attr('opacity', '0')
+
+            d3.select(this).append('text')
+                    .text(data => data.calories + 'Kcal')
+                    .attr("fill", "#FFFFFF")
+                    .attr('class', 'textHover')
+                    .style("font-size", "9px")
+                    .attr('y', function() {
+                        if(caloriesHeight > kiloHeight) {
+                            return newY + 45
+                        } else {
+                            return actualY + 45
+                        }
+                    })
+                    .attr('x', this.firstChild.nextElementSibling.getBBox().x + 39)
+                    .attr('opacity', '0')
+        })
+
+}
 
 
 
