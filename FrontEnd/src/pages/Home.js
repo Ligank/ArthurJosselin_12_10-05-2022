@@ -12,7 +12,15 @@ import calories from '../assets/calories.svg'
 import proteine from '../assets/proteine.svg'
 import glucides from '../assets/glucides.svg'
 import lipides from '../assets/lipides.svg'
+import {graphique} from "../components/Activity"
+import {scoreCircle} from "../components/Score"
 import '../styles/Home.css';
+
+window.onload = start
+function start() {
+  graphique()
+  scoreCircle()
+}
 
 
 function App() {

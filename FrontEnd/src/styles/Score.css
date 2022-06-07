@@ -1,6 +1,37 @@
-.Score {
-    background-color: blueviolet;
+.scoreBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #FBFBFB;
     width: 30%;
     height:17vw;
     border-radius: 5px;
 }
+
+.scoreTitle {
+    font-size: 14px;
+    color: #20253A;
+    margin: 15px 0 0 15px;
+}
+
+.scoreCircle {
+    width: 100%;
+    height: 100%;
+}
+
+.progress-bar {
+    fill: #E60000;
+  }
+  
+  
+  .progress-label {
+    fill: #20253A;
+    font-size: 20px;
+    text-anchor: middle;
+  }
+
+  .objectif {
+      font-size: 15px;
+      fill: #74798C;
+      text-anchor: middle;
+  }

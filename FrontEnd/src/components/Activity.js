@@ -18,7 +18,6 @@ function Activity() {
         </svg>
     </div>
 }
-window.onload = graphique
 
 export default Activity
 
