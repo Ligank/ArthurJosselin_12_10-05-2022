@@ -22,6 +22,8 @@
     height:5.5vw;
     border-radius: 5px;
     align-items: center;
+    max-width: 80px;
+    max-height: 80px;
 }
 
 .figureLogoFood {

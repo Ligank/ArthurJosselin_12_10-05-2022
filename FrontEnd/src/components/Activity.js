@@ -62,11 +62,7 @@ export async function graphique() {
     const xScaleNumber = d3.scaleBand().domain(Array.from(Array(kiloArray.length)).map((e,i)=>i+1)).rangeRound([0, containerWidth]).padding(0.9);
     const yScaleKilo = d3.scaleLinear().domain([kiloArrayMin, kiloArrayMax]).range([containerHeight, 0]);
     const yScaleCalorie = d3.scaleLinear().domain([caloriesArrayMin, caloriesArrayMax]).range([containerHeight, 0]);
-    const yScale = d3.scalePoint().domain(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin)).rangeRound([containerHeight, 0]);
-
-
-    
-             
+    const yScale = d3.scalePoint().domain(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin)).rangeRound([containerHeight, 0]);      
 
     //Création de la div back et gestion du hover
     let multigraph = container.selectAll(".bar")
@@ -193,6 +189,7 @@ export async function graphique() {
                     }
                 })
             })
+
         //creation des div contenant les données de chaque barre    
         multigraph.each(function(p,j) {
             let caloriesHeight = d3.select(this).select('.calories').node().getBoundingClientRect().height;
