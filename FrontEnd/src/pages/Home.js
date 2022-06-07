@@ -8,6 +8,10 @@ import Recap from "../components/Recap"
 import Score from "../components/Score"
 import Food from "../components/Food"
 import { USER_MAIN_DATA } from "../data/DataMocked";
+import calories from '../assets/calories.svg'
+import proteine from '../assets/proteine.svg'
+import glucides from '../assets/glucides.svg'
+import lipides from '../assets/lipides.svg'
 import '../styles/Home.css';
 
 
@@ -33,7 +37,40 @@ function App() {
                 <Score />
               </div>
             </div>
-          <Food />
+            <div className="Food">
+              <Food
+                key={profil[0].keyData.calorieCount}
+                img={calories}
+                color= 'red'
+                firstInfo= {profil[0].keyData.calorieCount}
+                secondInfo='Calories'
+                denomination='KCal'
+              ></Food>
+              <Food
+                key={profil[0].keyData.proteinCount}
+                img={proteine}
+                color= 'blue'
+                firstInfo= {profil[0].keyData.proteinCount}
+                secondInfo='Proteines'
+                denomination='g'
+              ></Food>
+              <Food
+                key={profil[0].keyData.carbohydrateCount}
+                img={glucides}
+                color= 'yellow'
+                firstInfo= {profil[0].keyData.carbohydrateCount}
+                secondInfo='Glucides'
+                denomination='g'
+              ></Food>
+              <Food
+                key={profil[0].keyData.lipidCount}
+                img={lipides}
+                color= 'pink'
+                firstInfo= {profil[0].keyData.lipidCount}
+                secondInfo='Lipides'
+                denomination='g'
+              ></Food>  
+            </div>
           </div>
         </div>
       </div>
