@@ -1,5 +1,4 @@
 import {profilData} from "../service/getData";
-import {sportSeeApi} from "../service/getData";
 import * as d3 from "d3";
 import '../styles/Score.css';
 
@@ -13,9 +12,6 @@ function Score() {
 export default Score
 
 export async function scoreCircle() {
-  let data = sportSeeApi('')
-  data.then(profil => {
-    console.log(profil.todayScore)
     //get Id and data
     let score = profilData[0][0].todayScore * 100;
 
@@ -110,8 +106,5 @@ export async function scoreCircle() {
         chart.update(progress[state])
             state = (state + 1) % progress.length
         }, 1000)
-    
-    }
-    )
   }
 

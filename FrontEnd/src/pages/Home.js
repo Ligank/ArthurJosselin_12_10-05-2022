@@ -14,7 +14,6 @@ import lipides from '../assets/lipides.svg'
 import {graphique} from "../components/Activity"
 import {scoreCircle} from "../components/Score"
 import {profilData} from "../service/getData";
-import {profilMainData2} from "../service/getData";
 import '../styles/Home.css';
 
 window.onload = start
