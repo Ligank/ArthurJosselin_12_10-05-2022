@@ -1,4 +1,5 @@
 import {api} from "../service/getData";
+import {profilData} from "../service/getData";
 import * as d3 from "d3";
 import '../styles/Score.css';
 
@@ -16,7 +17,7 @@ export async function scoreCircle() {
   let data = api('')
   data.then(profil => {
     console.log(profil.todayScore)
-    let score = profil.todayScore * 100;
+    let score = profilData[0][0].todayScore * 100;
 
     function radialProgress(selector) {
 
