@@ -1,4 +1,5 @@
-import { USER_MAIN_DATA } from "../data/DataMocked";
+import {profilData} from "../service/getData";
+import {sportSeeApi} from "../service/getData";
 import * as d3 from "d3";
 import '../styles/Score.css';
 
@@ -11,13 +12,12 @@ function Score() {
 
 export default Score
 
-
 export async function scoreCircle() {
-
+  let data = sportSeeApi('')
+  data.then(profil => {
+    console.log(profil.todayScore)
     //get Id and data
-    let id = parseInt(window.location.pathname.replace('/Home/', ''));
-    const profil = !id ? USER_MAIN_DATA : USER_MAIN_DATA.filter(profil => profil.id === id);
-    let score = profil[0].todayScore * 100;
+    let score = profilData[0][0].todayScore * 100;
 
     function radialProgress(selector) {
 
@@ -78,7 +78,7 @@ export async function scoreCircle() {
                         const angleDiff = Math.PI * progressPercent / 50 - startAngle;
                         const startAngleDeg = startAngle / Math.PI * 180
                         const angleDiffDeg = angleDiff / Math.PI * 180
-                        const transitionDuration = 1500
+                        const transitionDuration = 1000
                   
                         mainArcPath.transition().duration(transitionDuration).attrTween('d', function(){
                           return function(t) {
@@ -109,6 +109,9 @@ export async function scoreCircle() {
     d3.interval(function(){
         chart.update(progress[state])
             state = (state + 1) % progress.length
-        }, 1500)
+        }, 1000)
+    
+    }
+    )
   }
 

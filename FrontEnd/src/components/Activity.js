@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import * as d3 from "d3";
-import { USER_ACTIVITY } from "../data/DataMocked";
+import {profilData} from "../service/getData";
 import './../styles/Activity.css';
 
 function Activity() {
@@ -23,10 +23,7 @@ export default Activity
 
 //graphique
 export async function graphique() {
-    let userId = parseInt(window.location.pathname.replace('/Home/', ''));
-    const profil = !userId ? USER_ACTIVITY : USER_ACTIVITY.filter(profil => profil.userId === userId);
-    const data_activity = profil[0].sessions;
-
+    const data_activity = profilData[1][0].sessions;
 
     //Trouver la valeur la plus petite et la plus grande
     let kiloArray = [];
