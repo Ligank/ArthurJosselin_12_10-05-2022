@@ -13,6 +13,7 @@ import glucides from '../assets/glucides.svg'
 import lipides from '../assets/lipides.svg'
 import {graphique} from "../components/Activity"
 import {scoreCircle} from "../components/Score"
+import {spiderChart} from "../components/Performance"
 import {profilData} from "../service/getData";
 import '../styles/Home.css';
 
@@ -20,6 +21,7 @@ window.onload = start
 function start() {
   graphique()
   scoreCircle()
+  spiderChart()
 }
 
 function App() {

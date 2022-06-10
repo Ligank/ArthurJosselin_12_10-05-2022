@@ -1,6 +1,58 @@
-.Recap {
+.performance {
     background-color: #282D30;
     width: 30%;
     height:17vw;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
+.chart
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.chart svg
+{
+    border: 1px solid #FFFFFF;
+}
+
+.levels path
+{
+    fill: none;
+    stroke: #FFFFFF;
+}
+
+.tick-lines path
+{
+    stroke: rgb(228, 16, 16);
+    stroke-width: 2px;
+}
+
+
+.shape path
+{
+    fill: #FF0101;
+    opacity: 0.6;
+}
+
+.chart circle
+{
+    cursor: pointer;
+}
+
+.label2 {
+    font-size: 10px;
+}
+
+@media (max-width: 1024px) { 
+    
+    .label2 {
+        font-size: 8px;
+    }
+ }
