@@ -25,7 +25,6 @@ export async function spiderChart() {
         y: size / 2
     };
 
-console.log(profilData[3][0].data)
 const generateData = ( length ) =>
 {
     const data = [];
@@ -44,7 +43,6 @@ const generateData = ( length ) =>
 
 };
 
-
 const dataset = generateData( NUM_OF_SIDES );
 const dataValue = [];
 for ( let i = 0; i < profilData[3][0].data.length; i++ ) 
@@ -62,7 +60,7 @@ const maxData = Math.max(...dataValue)
     const g = d3.select( ".spider" ).append( "g" );
 
     const scale = d3.scaleLinear()
-    .domain( [ 0, maxData ] )
+    .domain( [ 0, maxData + 20 ] )
     .range( [ 0, r_0 ] )
     .nice();
 

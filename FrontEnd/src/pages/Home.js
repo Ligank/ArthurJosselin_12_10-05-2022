@@ -14,6 +14,7 @@ import lipides from '../assets/lipides.svg'
 import {graphique} from "../components/Activity"
 import {scoreCircle} from "../components/Score"
 import {spiderChart} from "../components/Performance"
+import {lineChart} from "../components/AverageSessions"
 import {profilData} from "../service/getData";
 import '../styles/Home.css';
 
@@ -22,6 +23,7 @@ function start() {
   graphique()
   scoreCircle()
   spiderChart()
+  lineChart()
 }
 
 function App() {

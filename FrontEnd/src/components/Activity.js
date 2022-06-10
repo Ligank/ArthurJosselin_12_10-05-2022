@@ -87,8 +87,7 @@ export async function graphique() {
                         d3.select(this).selectAll('.textHover').transition()
                         .duration('50')
                         .attr('opacity', '0')
-                    })
-                    ;
+                    });
 
          multigraph.append("rect")
                     .attr("class", "first")

@@ -1,6 +1,37 @@
-.Time {
+.averageSessions {
     background-color: #FF0000;
     width: 30%;
     height:17vw;
     border-radius: 5px;
 }
+
+.axis text {
+    font: 10px sans-serif;
+    color: #FFFFFF;
+    opacity: 0.5;
+  }
+  
+  .axis path,
+  .axis line {
+      display: none;
+  }
+
+  .sessionsText {
+      font-size: 17px;
+      position: absolute;
+      margin-left: 20px;
+      color: #FFFFFF;
+      opacity: 0.5;
+  }
+
+  .sessionsTime {
+      font-size: 6px;
+  }
+
+  @media (max-width: 1024px) { 
+    
+    .sessionsText {
+        font-size: 10px;
+        margin-left: 10px;
+    }
+ }
