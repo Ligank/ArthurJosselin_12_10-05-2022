@@ -12,6 +12,7 @@ export default Performance
 
 
 export async function spiderChart() {
+    //various data
     const sizeParent = d3.select('.performance').node().getBoundingClientRect(),
     NUM_OF_SIDES = Object.keys(profilData[3][0].kind).length,
     NUM_OF_LEVEL = 5,
@@ -25,32 +26,36 @@ export async function spiderChart() {
         y: size / 2
     };
 
-const generateData = ( length ) =>
-{
-    const data = [];
-
-    for ( let i = 0; i < length; i++ ) 
+    //personal data
+    const generateData = ( length ) =>
     {
-        data.push(
-            {
-                name: profilData[3][0].kind[i + 1],
-                value: profilData[3][0].data[i].value
-            }
-        );
-    }
+        const data = [];
 
-    return data;
+        for ( let i = 0; i < length; i++ ) 
+        {
+            data.push(
+                {
+                    name: profilData[3][0].kind[i + 1],
+                    value: profilData[3][0].data[i].value
+                }
+            );
+        }
 
-};
+        return data;
 
-const dataset = generateData( NUM_OF_SIDES );
-const dataValue = [];
-for ( let i = 0; i < profilData[3][0].data.length; i++ ) 
-    {
-        dataValue.push(profilData[3][0].data[i].value );
-    }
-const maxData = Math.max(...dataValue)
-    
+    };
+
+    const dataset = generateData( NUM_OF_SIDES );
+    //find max data
+    const dataValue = [];
+    for ( let i = 0; i < dataset.length; i++ ) 
+        {
+            dataValue.push(dataset[i].value );
+        }
+    const maxData = Math.max(...dataValue)
+
+
+    //creation the base svg
     d3.select(".performance")
       .append("svg")
       .attr("class", "spider")
@@ -59,12 +64,13 @@ const maxData = Math.max(...dataValue)
     
     const g = d3.select( ".spider" ).append( "g" );
 
+    //size of the chart and range of the data
     const scale = d3.scaleLinear()
     .domain( [ 0, maxData + 20 ] )
     .range( [ 0, r_0 ] )
     .nice();
 
-
+    //creation of the points
     const generatePoint = ( { length, angle } ) => {
     const point =
     {
@@ -74,7 +80,7 @@ const maxData = Math.max(...dataValue)
     return point;
     };
 
-
+    //path who follow the points
     const drawPath = ( points, parent ) =>
 {
     const lineGenerator = d3.line()
@@ -84,7 +90,7 @@ const maxData = Math.max(...dataValue)
     parent.append( "path" )
         .attr( "d", lineGenerator( points ) );
 };
-
+    //Creation the line of the chart
     const generateAndDrawLevels = ( levelsCount, sideCount ) =>
 {
 
@@ -105,9 +111,9 @@ const maxData = Math.max(...dataValue)
     }
 };
 
-
-const drawText = ( text, point, group ) =>
-{
+    //constant for the creation of the label
+    const drawText = ( text, point, group ) =>
+    {
         group.append( "text" )
             .attr( "x", point.x )
             .attr( "y", point.y + 5)
@@ -116,28 +122,30 @@ const drawText = ( text, point, group ) =>
             .style( "text-anchor", "middle" )
             .attr( "fill", "white" )
             .style( "font-family", "sans-serif" );
-};
+    };
 
-const drawData = ( dataset, n ) =>
-{
-    const points = [];
-    dataset.forEach( ( d, i ) => 
+    //creation of the path data in red
+    const drawData = ( dataset, n ) =>
     {
-        const len = scale( d.value );
-        const theta = i * ( 2 * Math.PI / n );
+        const points = [];
+        dataset.forEach( ( d, i ) => 
+        {
+            const len = scale( d.value );
+            const theta = i * ( 2 * Math.PI / n );
 
-        points.push(
-            {
-                ...generatePoint( { length: len, angle: theta } ),
-                value: d.value
-            } );
-    } );
+            points.push(
+                {
+                    ...generatePoint( { length: len, angle: theta } ),
+                    value: d.value
+                } );
+        } );
 
     const group = g.append( "g" ).attr( "class", "shape" );
 
     drawPath( [ ...points, points[ 0 ] ], group );
 };
 
+//creation of the labels
 const drawLabels = ( dataset, sideCount ) =>
 {
     const groupL = g.append( "g" ).attr( "class", "labels" );
@@ -152,8 +160,8 @@ const drawLabels = ( dataset, sideCount ) =>
     }
 };
 
-generateAndDrawLevels( NUM_OF_LEVEL, NUM_OF_SIDES );
-drawData( dataset, NUM_OF_SIDES );
-drawLabels( dataset, NUM_OF_SIDES );
+    generateAndDrawLevels( NUM_OF_LEVEL, NUM_OF_SIDES );
+    drawData( dataset, NUM_OF_SIDES );
+    drawLabels( dataset, NUM_OF_SIDES );
 
 }

@@ -21,11 +21,11 @@ function Activity() {
 
 export default Activity
 
-//graphique
+//graphic
 export async function graphique() {
     const data_activity = profilData[1][0].sessions;
 
-    //Trouver la valeur la plus petite et la plus grande
+    //Find the smallest and largest value
     let kiloArray = [];
     data_activity.forEach(kilo => {
         kiloArray.push(kilo.kilogram)
@@ -33,7 +33,7 @@ export async function graphique() {
     let kiloArrayMin = Math.min.apply(Math, kiloArray);
     kiloArrayMin--;
     let kiloArrayMax = Math.max.apply(Math, kiloArray);
-    //kiloArrayMax++;
+    
    
     let caloriesArray = [];
     data_activity.forEach(calorie => {
@@ -48,7 +48,7 @@ export async function graphique() {
         caloriesArrayMin = 1;
     }
     
-
+    //data
     const container = d3.select('.Activity_graphic');
     const containerWidth = d3.select('.Activity_graphic').node().getBoundingClientRect().width;
     let containerHeight = d3.select('.Activity_graphic').node().getBoundingClientRect().height;
@@ -60,7 +60,7 @@ export async function graphique() {
     const yScaleCalorie = d3.scaleLinear().domain([caloriesArrayMin, caloriesArrayMax]).range([containerHeight, 0]);
     const yScale = d3.scalePoint().domain(Array.from(Array(kiloArrayMax - kiloArrayMin + 1)).map((e,i)=>i+kiloArrayMin)).rangeRound([containerHeight, 0]);      
 
-    //Création de la div back et gestion du hover
+    //Creation of the back div and management of the hover
     let multigraph = container.selectAll(".bar")
                     .data(data_activity)
                     .enter().append("g")
@@ -101,7 +101,7 @@ export async function graphique() {
                     .attr('transform', `translate(-20, 0)`);
                     
 
-        //creation des barres            
+        //creation of the bars         
         multigraph.append("rect")
                   .attr("class", "first")
                   .attr("class","bar kilogram")
@@ -113,7 +113,7 @@ export async function graphique() {
                   .attr('rx', 5, 0)
                   .attr('transform', `translate(-10, 10)`);
 
-        multigraph.append("rect")//fausse ligne pour arrondi
+        multigraph.append("rect")//false line for rounding
                   .attr("class", "first")
                   .attr("class","bar ghost")
                   .attr('width', 11)
@@ -134,7 +134,7 @@ export async function graphique() {
                   .attr('rx', 5)
                   .attr('transform', `translate(10, 10)`);
 
-        multigraph.append("rect")//fausse ligne pour arrondi
+        multigraph.append("rect")//false line for rounding
                   .attr("class", "second")
                   .attr("class","bar ghost")
                   .attr("width", 11)
@@ -163,7 +163,7 @@ export async function graphique() {
                  .attr('dx', '15px')
                  .style("font-size", "14px");
 
-        //changements de la taille et de la position de la div back si la barre calorie est plus grande que la barre kilos        
+        //changes in the size and position of the div back if the calorie bar is larger than the kilo bar      
         let back = multigraph.selectAll('.back')
         back.each(function(p,j) {
             let caloriesHeight = d3.select(this.nextElementSibling.nextElementSibling.nextElementSibling).node().getBoundingClientRect().height;
@@ -185,7 +185,7 @@ export async function graphique() {
                 })
             })
 
-        //creation des div contenant les données de chaque barre    
+        //creation of divs containing the data of each bar        
         multigraph.each(function(p,j) {
             let caloriesHeight = d3.select(this).select('.calories').node().getBoundingClientRect().height;
             let kiloHeight = d3.select(this).select('.kilogram').node().getBoundingClientRect().height;
