@@ -19,13 +19,14 @@ export async function lineChart() {
     const sizeParent = d3.select('.averageSessions').node().getBoundingClientRect();
     const margin = {top:10,left:10,bottom:25,right:10}
     const width = sizeParent.width;
-    const height = sizeParent.height;
+    const height = sizeParent.height - sizeParent.height/4;
     
     //creation of base svg
     let svg = d3.select(".averageSessions")
                 .append("svg")
                 .attr("width", width)
                 .attr("height", height)
+                .attr('transform', `translate(0, ${sizeParent.height/4})`);
     
     //infos of axis            
     var x = d3.scaleBand()
