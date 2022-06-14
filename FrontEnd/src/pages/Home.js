@@ -18,6 +18,9 @@ import {lineChart} from "../components/AverageSessions"
 import {profilData} from "../service/getData";
 import '../styles/Home.css';
 
+/**
+ * Starts the four graphics last
+ */
 window.onload = start
 function start() {
   graphique()
