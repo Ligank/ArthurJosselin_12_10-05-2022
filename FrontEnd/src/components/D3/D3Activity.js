@@ -6,7 +6,7 @@ function D3Activity({data}) {
     const ref = useD3(
         (svg) => {
 
-    const data_activity = data.sessions;
+    const data_activity = data;
 
     //Find the smallest and largest value
     let kiloArray = [];

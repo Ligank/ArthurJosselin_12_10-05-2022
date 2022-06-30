@@ -16,7 +16,6 @@ function Score() {
     setIsLoading(false);
   }
 
-  
     return <div className="scoreBox">
             <h1 className="scoreTitle">Score</h1>
             <div className='scoreCircle'>

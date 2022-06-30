@@ -6,7 +6,7 @@ function D3AverageSession({data}) {
     const ref = useD3(
       (svg2) => {
      //data
-    const datas = data.sessions
+    const datas = data
     const sizeParent = d3.select('.averageSessions').node().getBoundingClientRect();
     const margin = {top:10,left:10,bottom:25,right:10}
     const width = sizeParent.width;

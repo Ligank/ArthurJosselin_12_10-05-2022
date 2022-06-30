@@ -8,7 +8,7 @@ function D3Performance({data}) {
         let info = data
         //various data
     const sizeParent = d3.select('.performance').node().getBoundingClientRect(),
-    NUM_OF_SIDES = Object.keys(info.kind).length,
+    NUM_OF_SIDES = Object.keys(info).length,
     NUM_OF_LEVEL = 5,
     size = (Math.min( sizeParent.width, sizeParent.height)),
     offset = Math.PI,
@@ -29,8 +29,8 @@ function D3Performance({data}) {
         {
             data.push(
                 {
-                    name: info.kind[i + 1],
-                    value: info.data[i].value
+                    name: info[i].kind,
+                    value: info[i].value
                 }
             );
         }
