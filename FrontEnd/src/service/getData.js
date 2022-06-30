@@ -1,37 +1,21 @@
 import { USER_ACTIVITY, USER_AVERAGE_SESSIONS, USER_MAIN_DATA, USER_PERFORMANCE } from "../data/DataMocked";
-const axios = require('axios').default;
 
 let id = parseInt(window.location.pathname.replace('/Home/', ''));
 const BASE_URL = "http://localhost:3000/user/" + id;
 
-//date mocked
-const profilMainData = !id ? USER_MAIN_DATA : USER_MAIN_DATA.filter(profil => profil.id === id);
-const profilACTIVITY = !id ? USER_ACTIVITY : USER_ACTIVITY.filter(profil => profil.userId === id);
-const profilAVERAGE_SESSIONS = !id ? USER_AVERAGE_SESSIONS : USER_AVERAGE_SESSIONS.filter(profil => profil.userId === id);
-const profilPERFORMANCE = !id ? USER_PERFORMANCE : USER_PERFORMANCE.filter(profil => profil.userId === id);
-export const profilData = [profilMainData,profilACTIVITY,profilAVERAGE_SESSIONS,profilPERFORMANCE]
-
-
 
 /**
- * Call API with BASE_URL/service and return promise with data needed
+ * Call API with BASE_URL/service and return with data needed
  * @param {String} service service as '', 'activity', 'average-sessions' or 'performance'
- * @returns {Promise}
+ * @returns {data}
  */
 
-let mocked = false
-
-  export async function api(service) {
-    const url = `${BASE_URL}/${service}`;
-    return axios.get(url)
-    .then((profil) => {
-        return profil.data.data
-    })
-  }
+let mocked = false //switch beetween data mocked or API
 
   export async function fetchName(service) {
     if (mocked === true) {
       const data = !id ? USER_MAIN_DATA : USER_MAIN_DATA.filter(profil => profil.id === id)
+      console.log('data mocked')
       return data[0].userInfos
     }
     let response
@@ -40,6 +24,7 @@ let mocked = false
     try {
       response = await fetch(url)
       data = await response.json()
+      console.log('data API')
       return data.data.userInfos
     } catch (err) {
       console.log('Error', err)
@@ -83,7 +68,6 @@ let mocked = false
   export async function fetchActivity (service) {
     if (mocked === true) {
       const data = !id ? USER_ACTIVITY : USER_ACTIVITY.filter(profil => profil.userId === id);
-      
       return data[0]
     }
     let response
@@ -101,7 +85,6 @@ let mocked = false
   export async function fetchAverageSession (service) {
     if (mocked === true) {
       const data = !id ? USER_AVERAGE_SESSIONS : USER_AVERAGE_SESSIONS.filter(profil => profil.userId === id);
-      
       return data[0]
     }
     let response
