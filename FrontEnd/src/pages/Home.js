@@ -1,4 +1,3 @@
-
 import Header from "../components/Header"
 import NavigationLeft from "../components/NavigationLeft"
 import TitleDashboard from "../components/TitleDashboard"
@@ -11,34 +10,47 @@ import calories from '../assets/calories.svg'
 import proteine from '../assets/proteine.svg'
 import glucides from '../assets/glucides.svg'
 import lipides from '../assets/lipides.svg'
-import {graphique} from "../components/Activity"
-import {scoreCircle} from "../components/Score"
-import {spiderChart} from "../components/Performance"
-import {lineChart} from "../components/AverageSessions"
-import {profilData} from "../service/getData";
+import {removeSecond} from "../components/Score"
+import {removeSecond2} from "../components/Performance"
+import {fetchName} from "../service/getData";
+import {fetchFood} from "../service/getData";
+import React, { useState, useEffect } from "react";
 import '../styles/Home.css';
 
+window.onload = start
 /**
  * Starts the four graphics last
  */
-window.onload = start
 function start() {
-  graphique()
-  scoreCircle()
-  spiderChart()
-  lineChart()
+  removeSecond()
+  removeSecond2()
 }
 
 function App() {
+  const [food, setFood] = useState([])
+  const [name, setName] = useState([])
+  let isLoading = false
+
+  useEffect(() => {
+    fetchInformationUser()
+  }, [isLoading])
+
+  async function fetchInformationUser () {
+    const info = await fetchFood('')
+    setFood(info)
+    const infoUser = await fetchName('')
+    setName(infoUser)
+  }
+
   return (
     <div className="App">
       <Header />
       <div className='nav_vertical_center'>
         <NavigationLeft />
         <div className='dashBoard'>
-          <TitleDashboard 
-              key={`${profilData[0][0].id}`}
-              name={profilData[0][0].userInfos.firstName}>
+       <TitleDashboard 
+              key={`${name?.id}`}
+              name={name?.firstName}>
           </TitleDashboard>
           <div className='dashboard_down'>
             <div className='dashboard_left'>
@@ -50,45 +62,46 @@ function App() {
               </div>
             </div>
             <div className="Food">
-              <Food
-                key={profilData[0][0].keyData.calorieCount}
+            <Food
+                key={food?.calorieCount}
                 img={calories}
                 color= 'red'
-                firstInfo= {profilData[0][0].keyData.calorieCount}
+                firstInfo= {food?.calorieCount}
                 secondInfo='Calories'
                 denomination='KCal'
               ></Food>
               <Food
-                key={profilData[0][0].keyData.proteinCount}
+                key={food?.proteinCount}
                 img={proteine}
                 color= 'blue'
-                firstInfo= {profilData[0][0].keyData.proteinCount}
+                firstInfo= {food?.proteinCount}
                 secondInfo='Proteines'
                 denomination='g'
               ></Food>
               <Food
-                key={profilData[0][0].keyData.carbohydrateCount}
+                key={food?.carbohydrateCount}
                 img={glucides}
                 color= 'yellow'
-                firstInfo= {profilData[0][0].keyData.carbohydrateCount}
+                firstInfo= {food?.carbohydrateCount}
                 secondInfo='Glucides'
                 denomination='g'
               ></Food>
               <Food
-                key={profilData[0][0].keyData.lipidCount}
+                key={food?.lipidCount}
                 img={lipides}
                 color= 'pink'
-                firstInfo= {profilData[0][0].keyData.lipidCount}
+                firstInfo= {food?.lipidCount}
                 secondInfo='Lipides'
                 denomination='g'
-              ></Food>  
+              ></Food> 
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-  
+ 
 }
 
 export default App;
+
